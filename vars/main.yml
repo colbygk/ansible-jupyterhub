@@ -1,9 +1,6 @@
 ---
 # file: roles/jupyter/vars/main.yml
 jupyter_pkgs:
-  - git
-  - nodejs-legacy
-  - npm
   - python
   - python-dev
   - python-setuptools

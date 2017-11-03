@@ -21,7 +21,7 @@
   tags: jupyter
 
 - name: add jupyter user
-  user: name=jupyter state=present groups=jupyter,shadow password="{{jupyterpw}}"
+  user: name=jupyter state=present groups=jupyter,shadow
   become: yes
   become_method: sudo
   tags: jupyter
@@ -78,19 +78,19 @@
   tags: jupyter
 
 - name: set IP address
-  lineinfile: dest=/etc/jupyterhub/jupyterhub_config.py line="c.JupyterHub.hub_ip = '{{ansible_eno1.ipv4.address}}'"
+  lineinfile: dest=/etc/jupyterhub/jupyterhub_config.py line="c.JupyterHub.hub_ip = '{{ansible_default_ipv4.address}}'"
   become: yes
   become_method: sudo
   tags: jupyter
 
 - name: set IP address
-  lineinfile: dest=/etc/jupyterhub/jupyterhub_config.py line="c.JupyterHub.ip = '{{ansible_eno1.ipv4.address}}'"
+  lineinfile: dest=/etc/jupyterhub/jupyterhub_config.py line="c.JupyterHub.ip = '{{ansible_default_ipv4.address}}'"
   become: yes
   become_method: sudo
   tags: jupyter
 
 - name: set IP address
-  lineinfile: dest=/etc/jupyterhub/jupyterhub_config.py line="c.JupyterHub.proxy_api_ip = '{{ansible_eno1.ipv4.address}}'"
+  lineinfile: dest=/etc/jupyterhub/jupyterhub_config.py line="c.JupyterHub.proxy_api_ip = '{{ansible_default_ipv4.address}}'"
   become: yes
   become_method: sudo
   tags: jupyter
@@ -119,13 +119,13 @@
   register: cert_exists
   tags: jupyter
 
-- name: create self-signed SSL cert
-  command: openssl req -new -nodes -x509 -subj "/C={{ssl_country}}/ST={{ssl_state}}/L={{ssl_city}}/O={{ssl_org}}/CN=${ansible_fqdn}" -days 3650 -keyout /etc/jupyterhub/server.key -out /etc/jupyterhub/server.crt -extensions v3_ca creates=/etc/jupyterhub/server.crt
-  when: 
-    - nossl == False
-    - cert_exists.stat.exists == False
-  become: yes
-  become_method: sudo
+#- name: create self-signed SSL cert
+#  command: openssl req -new -nodes -x509 -subj "/C={{ssl_country}}/ST={{ssl_state}}/L={{ssl_city}}/O={{ssl_org}}/CN=${ansible_fqdn}" -days 3650 -keyout /etc/jupyterhub/server.key -out /etc/jupyterhub/server.crt -extensions v3_ca creates=/etc/jupyterhub/server.crt
+#  when: 
+#    - nossl == False
+#    - cert_exists.stat.exists == False
+#  become: yes
+#  become_method: sudo
 
 - name: set jupyterhub certificate
   lineinfile: dest=/etc/jupyterhub/jupyterhub_config.py line="c.JupyterHub.ssl_cert = '/etc/jupyterhub/server.crt'"
