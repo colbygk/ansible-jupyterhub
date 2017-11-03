@@ -95,15 +95,26 @@
   become_method: sudo
   tags: jupyter
 
-- name: Check to see if config file exists
-  stat: path=/etc/init.d/jupyterhub
-  register: init_exists
-  become: yes
-  become_method: sudo
-  tags: jupyter
+#- name: Check to see if config file exists
+#stat: path=/etc/init.d/jupyterhub
+#register: init_exists
+#become: yes
+#become_method: sudo
+#tags: jupyter
+#
+#- name: install jupyterhub init script
+#  copy: src=jupyter.init dest=/etc/init.d/jupyterhub mode=755 owner=root group=root
+#  become: yes
+#  become_method: sudo
+#  tags: jupyter
 
-- name: install jupyterhub init script
-  copy: src=jupyter.init dest=/etc/init.d/jupyterhub mode=755 owner=root group=root
+- name: install jupyter.service init script
+  copy:
+    src: jupyter.service
+    dest: /etc/systemd/system/jupyter.service
+    mode: 755
+    owner: root
+    group: root
   become: yes
   become_method: sudo
   tags: jupyter
