@@ -10,3 +10,8 @@ jupyter_pkgs:
   - python3-setuptools
   - sudo
 
+jupyter_pip_pkgs:
+  - scipy
+  - scikit_learn
+  - plotly
+

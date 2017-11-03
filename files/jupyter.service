@@ -1,0 +1,14 @@
+[Unit]
+Description=Jupyter Hub
+After=network.target
+
+[Service]
+Type=simple
+User=jupyter
+WorkingDirectory=/etc/jupyter
+ExecStart=/usr/local/bin/jupyterhub --JupyterHub.spawner_class=sudospawner.SudoSpawner
+Restart=on-abort
+
+[Install]
+WantedBy=multi-user.target
+

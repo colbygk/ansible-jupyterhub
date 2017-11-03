@@ -1,3 +1,7 @@
 jupyter
 jupyterhub
 git+https://github.com/jupyter/sudospawner
+scipy
+numpy
+scikit-learn
+plotly
